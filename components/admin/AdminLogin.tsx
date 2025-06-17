@@ -3,7 +3,7 @@ import { AppContext, AppContextType }  from '../../App';
 import LoadingSpinner from '../common/LoadingSpinner';
 
 const AdminLogin: React.FC = () => {
-  const [email, setEmail] = useState('admin@moviezone.com'); // Default or let user type
+  const [email, setEmail] = useState(''); // Default or let user type
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
