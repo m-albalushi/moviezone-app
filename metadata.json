@@ -1,0 +1,6 @@
+{
+  "name": "MovieZone",
+  "description": "A movie browsing and management application. Users can browse movies, view details, and administrators can manage the movie catalog using Supabase for backend services.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
