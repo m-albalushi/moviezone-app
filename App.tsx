@@ -138,7 +138,6 @@ export const App: React.FC = () => { // Changed to named export
     }
     // No alert on success, navigation handles feedback
   }, []);
-
   const addMovie = useCallback(async (movieData: MovieInsertType): Promise<Movie | null> => {
     const moviePayload = {
         ...movieData, 
