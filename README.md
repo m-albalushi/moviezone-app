@@ -1,4 +1,7 @@
-# Run and deploy your AI Studio app
+# Run and deploy Moviezone  app
+
+
+I built this solo as a personal project to learn Supabase, PostgreSQL, and front-end integration Typescript React js
 
 This contains everything you need to run your app locally.
 
@@ -11,4 +14,4 @@ This contains everything you need to run your app locally.
    `npm install`
 3. Run the app:
    `npm run dev`
-   
+
