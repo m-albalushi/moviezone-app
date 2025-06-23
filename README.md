@@ -102,10 +102,49 @@ To connect your project to Supabase:
 Choose one of these options when your site is under maintenance:
 
 ### 🔹 Option 1: Rename
+Option 1: Manual File Rename Method (Recommended)
 
-- Rename `index.html` → `index_backup.html`
-- Rename `maintenance.html` → `index.html`
-- Rebuild and redeploy
+This method uses a simple file rename to switch between your actual homepage (index.html) and your maintenance page (maintenance.html).
+
+🔁 To Enable Maintenance Mode:
+:
+Open VS Code Terminal in the root folder.
+
+
+ ```bash
+Rename-Item index.html index_backup.html
+Rename-Item maintenance.html index.html
+
+   ```
+Push changes to GitHub
+```bash
+npm run build
+git add .
+git commit -m "Disable maintenance mode"
+git push origin main
+
+   ```
+
+
+   🔄 To Disable Maintenance Mode:
+In the same terminal, restore the original index.html:
+
+
+ ```bash
+Rename-Item index.html maintenance.html
+Rename-Item index_backup.html index.html
+
+   ```
+Push changes to GitHub
+```bash
+npm run build
+git add .
+git commit -m "Disable maintenance mode"
+git push origin main
+
+   ```
+
+
 
 ### 🔹 Option 2: Redirect (Netlify)
 
