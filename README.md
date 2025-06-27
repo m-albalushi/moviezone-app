@@ -146,7 +146,7 @@ git push origin main
 
 
 
-### 🔹 Option 2: Redirect (Netlify)
+### 🔹 Option 2: Redirect (Netlify) // still not working 
 
 Add this to a file called `netlify.toml` in your root:
 ```toml
