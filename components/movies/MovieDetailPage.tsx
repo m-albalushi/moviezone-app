@@ -20,15 +20,10 @@ const MovieDetailPage: React.FC = () => {
   const navigate = useNavigate();
   
   const [movie, setMovie] = useState<Movie | undefined>(undefined);
-  const [isLoadingPage, setIsLoadingPage] = useState<boolean>(true);
-
 
   useEffect(() => {
-    setIsLoadingPage(true);
-
     if (!id) {
       navigate('/');
-      setIsLoadingPage(false);
       return;
     }
 
@@ -37,12 +32,11 @@ const MovieDetailPage: React.FC = () => {
     if (!isAppContextLoading) {
       const foundMovie = contextMovies.find(m => m.id === id);
       setMovie(foundMovie);
-      setIsLoadingPage(false);
     }
   }, [id, contextMovies, isAppContextLoading, navigate]);
 
 
-  if (isLoadingPage || (isAppContextLoading && !movie)) { 
+  if (isAppContextLoading && !movie) { 
     return (
       <div className="flex justify-center items-center h-screen">
         <LoadingSpinner size="w-16 h-16" />

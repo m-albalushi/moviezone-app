@@ -68,35 +68,8 @@ export const App: React.FC = () => { // Changed to named export
     }
   }, []);
 
-
+  // Effect for handling authentication state changes
   useEffect(() => {
-    setIsLoading(true); 
-    const fetchSessionAndInitialMovies = async () => {
-      const { data: { session: currentSession }, error: sessionError } = await supabase.auth.getSession();
-      
-      if (sessionError) {
-        console.error("Error fetching session:", sessionError.message || sessionError);
-      }
-      setSession(currentSession);
-      setUser(currentSession?.user ?? null);
-      setIsAdmin(!!currentSession?.user);
-
-      const { data: movieData, error: movieError } = await supabase
-        .from('movies')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (movieError) {
-        console.error('Error fetching initial movies:', movieError.message || movieError);
-        setMovies([]);
-      } else {
-        setMovies(movieData || []);
-      }
-      setIsLoading(false); 
-    };
-
-    fetchSessionAndInitialMovies();
-
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (_event, newSession) => {
         setSession(newSession);
@@ -114,6 +87,26 @@ export const App: React.FC = () => { // Changed to named export
     );
     return () => authListener.subscription.unsubscribe();
   }, [navigate, location.pathname]);
+
+  // Effect for fetching initial session and movie data, runs only once
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      setIsLoading(true);
+      const { data: { session: currentSession }, error: sessionError } = await supabase.auth.getSession();
+      
+      if (sessionError) {
+        console.error("Error fetching session:", sessionError.message || sessionError);
+      }
+      setSession(currentSession);
+      setUser(currentSession?.user ?? null);
+      setIsAdmin(!!currentSession?.user);
+
+      await refreshMovies();
+      setIsLoading(false); 
+    };
+
+    fetchInitialData();
+  }, [refreshMovies]);
 
 
   const loginAdmin = useCallback(async (password: string, email: string = 'admin@moviezone.com'): Promise<boolean> => {
@@ -138,6 +131,7 @@ export const App: React.FC = () => { // Changed to named export
     }
     // No alert on success, navigation handles feedback
   }, []);
+
   const addMovie = useCallback(async (movieData: MovieInsertType): Promise<Movie | null> => {
     const moviePayload = {
         ...movieData, 
