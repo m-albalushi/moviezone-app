@@ -1,13 +1,13 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { AppContext, AppContextType } from '../../App';
-import { Movie } from '../../types';
-import VideoPlayer from '../movies/VideoPlayer';
-import DownloadIcon from '../icons/DownloadIcon';
-import EyeIcon from '../icons/EyeIcon';
-import StarIcon from '../icons/StarIcon';
-import LoadingSpinner from '../common/LoadingSpinner';
+import { AppContext, AppContextType } from '../App';
+import { Movie } from '../types';
+import VideoPlayer from '../components/movies/VideoPlayer';
+import DownloadIcon from '../components/icons/DownloadIcon';
+import EyeIcon from '../components/icons/EyeIcon';
+import StarIcon from '../components/icons/StarIcon';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const MovieDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -21,42 +21,25 @@ const MovieDetailPage: React.FC = () => {
   
   const [movie, setMovie] = useState<Movie | undefined>(undefined);
   const [isLoadingPage, setIsLoadingPage] = useState<boolean>(true);
-  const [viewIncremented, setViewIncremented] = useState<boolean>(false);
 
 
   useEffect(() => {
-    setMovie(undefined); 
-    setViewIncremented(false);
-    setIsLoadingPage(true); 
-  }, [id]);
+    setIsLoadingPage(true);
 
-  useEffect(() => {
     if (!id) {
-      navigate('/'); 
-      setIsLoadingPage(false); 
+      navigate('/');
+      setIsLoadingPage(false);
       return;
     }
 
-    if (!isAppContextLoading) { 
+    // This effect now ONLY finds the movie. It does NOT increment views.
+    // The view increment logic is correctly handled by the VideoPlayer component.
+    if (!isAppContextLoading) {
       const foundMovie = contextMovies.find(m => m.id === id);
-      
-      if (foundMovie) {
-        if (movie?.id !== foundMovie.id) {
-          setMovie(foundMovie);
-        }
-        
-        if (!viewIncremented) {
-          incrementMovieViews(foundMovie.id);
-          setViewIncremented(true);
-        }
-      } else {
-        setMovie(undefined); 
-      }
+      setMovie(foundMovie);
       setIsLoadingPage(false);
-    } else {
-      setIsLoadingPage(true); 
     }
-  }, [id, contextMovies, incrementMovieViews, navigate, isAppContextLoading, viewIncremented, movie]);
+  }, [id, contextMovies, isAppContextLoading, navigate]);
 
 
   if (isLoadingPage || (isAppContextLoading && !movie)) { 
@@ -163,7 +146,12 @@ const MovieDetailPage: React.FC = () => {
       <div className="mt-12">
         <h2 className="text-3xl font-semibold text-white mb-6">Watch Trailer / Movie</h2>
         {movie.videoUrl ? (
-            <VideoPlayer src={movie.videoUrl} title={movie.title} />
+            <VideoPlayer 
+                src={movie.videoUrl} 
+                title={movie.title} 
+                movieId={movie.id}
+                onPlayAction={incrementMovieViews}
+            />
         ) : (
             <div className="aspect-video bg-black rounded-lg flex justify-center items-center">
                 <p className="text-gray-400 text-xl">No video available for this movie.</p>

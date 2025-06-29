@@ -4,18 +4,29 @@ import React, { useState } from 'react';
 interface VideoPlayerProps {
   src: string;
   title: string;
+  movieId: string;
+  onPlayAction: (movieId: string) => void;
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, title }) => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, title, movieId, onPlayAction }) => {
   const [loadError, setLoadError] = useState(false);
+  const [viewCounted, setViewCounted] = useState(false);
 
   const handleVideoError = () => {
     setLoadError(true);
   };
+  
+  const handlePlay = () => {
+    if (!viewCounted) {
+      onPlayAction(movieId);
+      setViewCounted(true);
+    }
+  };
 
-  // Attempt to reset error if src changes and new src is valid
+  // Attempt to reset error and view counted status if src changes
   React.useEffect(() => {
     setLoadError(false);
+    setViewCounted(false);
   }, [src]);
 
   return (
@@ -29,6 +40,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, title }) => {
           poster={`https://picsum.photos/seed/${title.replace(/[^a-zA-Z0-9]/g, '') || 'movie'}/1280/720`} // Basic poster from title, sanitized
           onError={handleVideoError}
           onCanPlay={() => setLoadError(false)} // If it becomes playable, clear error
+          onPlay={handlePlay}
         >
           Your browser does not support the video tag.
         </video>
