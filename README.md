@@ -53,12 +53,6 @@ To connect your project to Supabase:
 - Project URL
 - Anon Public API Key
 
-3. Add them in `supabaseClient.ts`:
-   ```ts
-   const supabaseUrl = 'YOUR_SUPABASE_PROJECT_URL';
-   const supabaseAnonKey = 'YOUR_SUPABASE_ANON_PUBLIC_KEY';
-   ```
-
 4. In Supabase:
 
 - ✅ Create a table named `movies` (check `types.ts` for required columns)
