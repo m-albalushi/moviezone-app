@@ -36,7 +36,7 @@ To run the project locally:
 VITE_SUPABASE_URL=your-supabase-url
 VITE_SUPABASE_ANON_KEY=your-anon-key
    ```
-
+- How to get your-supabase-url and your-anon-key  you will find them after  you setup your Supabase account.
 
 3. Start the development server:
    ```bash
@@ -50,8 +50,9 @@ To connect your project to Supabase:
 1. Create a Supabase account and a new project.
 2. Get the following from your Supabase dashboard:
 
-- Project URL
-- Anon Public API Key
+- Project URL is your-supabase-url
+- Anon Public API Key is your-anon-key
+
 
 4. In Supabase:
 
