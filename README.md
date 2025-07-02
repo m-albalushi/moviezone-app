@@ -18,19 +18,27 @@ MovieZone is a personal streaming platform that allows users to browse, watch, a
 - Vite (build tool)
 - Supabase (Auth, Storage, and PostgreSQL DB)
 - PostgreSQL
+- Netlify (deployment)  // Currently the platform is disabled by the Owner
 
 ## 🛠️ Getting Started
 
 To run the project locally:
 
-**Make sure Node.js is installed.**
+**Make sure you have **Node.js** and **npm** installed.**
 
 1. Install dependencies:
    ```bash
    npm install
    ```
+2. Create a .env file in the root directory and add:
 
-2. Start the development server:
+  ```bash
+VITE_SUPABASE_URL=your-supabase-url
+VITE_SUPABASE_ANON_KEY=your-anon-key
+   ```
+
+
+3. Start the development server:
    ```bash
    npm run dev
    ```
@@ -89,13 +97,20 @@ To connect your project to Supabase:
 ## 🚀 Deploying to Netlify (Free Hosting)
 
 1. Push your project to GitHub.
-2. Sign in to Netlify and connect your GitHub repo.
-3. Set the build settings:
+2. Connect your GitHub repo to Netlify.
+3. Add these environment variables in Netlify Dashboard → Site Settings → Environment:
 
+- VITE_SUPABASE_URL
+
+- VITE_SUPABASE_ANON_KEY
+
+
+
+4. Set build settings:
 - Build command: `npm run build`
 - Publish directory: `dist`
 
-4. Deploy the site.
+5. Deploy the site.
 
 ## 🛡 Maintenance Mode (Optional)
 
@@ -157,4 +172,4 @@ Add this to a file called `netlify.toml` in your root:
 ```
 - Rebuild and deploy
 
-⚠️ Use only one method at a time.
+⚠️ Use only one method only.
