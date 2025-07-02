@@ -258,4 +258,3 @@ export const App: React.FC = () => { // Changed to named export
   );
 };
 
-// Removed export default App;
