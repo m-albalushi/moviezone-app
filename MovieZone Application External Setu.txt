@@ -1,0 +1,37 @@
+MovieZone Application: External Setup Summary
+To run this application, you'll need to configure the following external services and settings:
+Supabase (Backend-as-a-Service):
+Account & Project: Create a Supabase account and a new project.
+API Credentials:
+Obtain your Supabase Project URL and anon public API Key.
+Where to put them: Update these in supabaseClient.ts.
+Generated typescript
+// supabaseClient.ts
+const supabaseUrl = 'YOUR_SUPABASE_PROJECT_URL'; // Replace
+const supabaseAnonKey = 'YOUR_SUPABASE_ANON_PUBLIC_KEY'; // Replace
+Use code with caution.
+TypeScript
+Database Table: Create a table named movies with appropriate columns (see types.ts for schema details like title, description, genre, etc.).
+Database Functions (RPC): Create two SQL functions in your Supabase project:
+increment_views(movie_id_param uuid)
+increment_downloads(movie_id_param uuid)
+Authentication:
+Enable the Email provider in Supabase Authentication settings.
+Create an admin user account (e.g., admin@moviezone.com) through the Supabase dashboard. You'll use these credentials to log into the app's admin section.
+Storage Bucket: Create a public Supabase Storage bucket named movie-videos (this exact name is used in components/admin/MovieForm.tsx for video uploads).
+Row Level Security (RLS): It's highly recommended to set up RLS policies on your movies table to control access (e.g., public read, authenticated admin write).
+Development Environment:
+Node.js & npm (or yarn): Ensure Node.js is installed. Run npm install in the project root to get dependencies.
+Google Gemini API (Optional Feature - Currently Not Implemented):
+The file services/geminiService.ts is a placeholder.
+If you plan to add Gemini features:
+Obtain a Gemini API Key.
+Important: Do not put this key in the frontend code. Instead, create a Supabase Edge Function to securely call the Gemini API, storing the API key as a secret within your Supabase project settings.
+Deployment (e.g., Netlify):
+Version Control: Use Git and host your code on a platform like GitHub.
+Hosting: Connect your repository to a hosting service like Netlify.
+Build command: npm run build (or vite build)
+Publish directory: dist
+Maintenance Mode (Optional):
+Create a public/maintenance.html page.
+Configure redirects (e.g., in a netlify.toml file at the project root) to show this page during maintenance.
