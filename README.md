@@ -168,3 +168,5 @@ Add this to a file called `netlify.toml` in your root:
 - Rebuild and deploy
 
 ⚠️ Use only one method only.
+
+
