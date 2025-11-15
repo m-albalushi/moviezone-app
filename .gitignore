@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 .env
 activate_paused_account.txt
-admin_credentials.txt
+admin.txt
